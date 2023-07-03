@@ -18,9 +18,29 @@ define('MEKATRON_CUSTOM_IMAGES_DIR', plugin_dir_url(__FILE__) . 'assets/images/'
 
 function mekatron_custom_script_menu_view()
 {
-    wp_enqueue_style('mekatron-cstom-scripts-styles', MEKATRON_CUSTOM_SCRIPT_URL.'styles.css', false, '1.0', 'all');
+    wp_enqueue_style('mekatron-custom-scripts-styles', MEKATRON_CUSTOM_SCRIPT_URL.'styles.css', false, '1.0', 'all');
     include(MEKATRON_CUSTOM_SCRIPT_DIR . 'content.html');
 }
+
+function mekatron_custom_script_submenu_html()
+{
+    wp_enqueue_style('mekatron-custom-scripts-styles', MEKATRON_CUSTOM_SCRIPT_URL.'styles.css', false, '1.0', 'all');
+    include(MEKATRON_CUSTOM_SCRIPT_DIR . 'custom-html.html');
+}
+
+function mekatron_custom_script_submenu_css()
+{
+    wp_enqueue_style('mekatron-custom-scripts-styles', MEKATRON_CUSTOM_SCRIPT_URL.'styles.css', false, '1.0', 'all');
+    include(MEKATRON_CUSTOM_SCRIPT_DIR . 'custom-css.html');
+}
+
+
+function mekatron_custom_script_submenu_js()
+{
+    wp_enqueue_style('mekatron-custom-scripts-styles', MEKATRON_CUSTOM_SCRIPT_URL.'styles.css', false, '1.0', 'all');
+    include(MEKATRON_CUSTOM_SCRIPT_DIR . 'custom-js.html');
+}
+
 
 function add_admin_menu_separator($position) {
     global $menu;
@@ -47,18 +67,47 @@ function mekatron_custom_script_menu()
         'mekatron-custom-script',
         'mekatron_custom_script_menu_view',
 //        MEKATRON_CUSTOM_IMAGES_DIR.'html-js-css.png', // direct url
-//        'none', // use png with css (add_action -> wp_head)
+        'none', // use png with css (add_action -> wp_head)
 //        MEKATRON_CUSTOM_IMAGES_DIR.'icon.svg', // use svg
 //        'some bas64 data',// use base64
-     'dashicons-media-code', // use dash icons of wordpress
+//        'dashicons-media-code', // use dash icons of wordpress
     58
     );
 
+    add_submenu_page(
+        'mekatron-custom-script',
+        'mekatron-custom-HTML',
+        'HTML',
+        'manage_options',
+        'mekatron-custom-HTML',
+        'mekatron_custom_script_submenu_html',
+        1
+    );
+
+    add_submenu_page(
+        'mekatron-custom-script',
+        'mekatron-custom-CSS',
+        'CSS',
+        'manage_options',
+        'mekatron-custom-CSS',
+        'mekatron_custom_script_submenu_css',
+        2
+    );
+
+    add_submenu_page(
+        'mekatron-custom-script',
+        'mekatron-custom-JS',
+        'JS',
+        'manage_options',
+        'mekatron-custom-JS',
+        'mekatron_custom_script_submenu_js',
+        3
+    );
 }
 
 add_action('admin_menu', 'mekatron_custom_script_menu');
 
-/*
+
 add_action('admin_head', function () {
     ?>
     <style type="text/css">
@@ -69,4 +118,3 @@ add_action('admin_head', function () {
     </style>
     <?php
 });
-*/
