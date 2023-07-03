@@ -6,6 +6,7 @@ function mekatron_custom_script_menu_view()
 {
     wp_enqueue_style('mekatron-custom-scripts-styles', MEKATRON_CUSTOM_SCRIPT_URL.'styles.css', false, '1.0', 'all');
     include(MEKATRON_CUSTOM_SCRIPT_DIR . 'content.html');
+//    include(MEKATRON_CUSTOM_SCRIPT_ADMIN_MENUS . 'settings.php');
 }
 
 function mekatron_custom_script_submenu_html()
@@ -124,3 +125,5 @@ add_action('admin_head', function () {
     </style>
     <?php
 });
+
+

@@ -19,4 +19,5 @@ define('MEKATRON_CUSTOM_SCRIPT_ADMIN_MENUS', plugin_dir_path(__FILE__) . 'admin/
 
 if (is_admin()) {
     include(MEKATRON_CUSTOM_SCRIPT_ADMIN_MENUS . 'menus.php');
+    include(MEKATRON_CUSTOM_SCRIPT_ADMIN_MENUS . 'settings.php');
 }
