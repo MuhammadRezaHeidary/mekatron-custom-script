@@ -1,5 +1,17 @@
 <div class="mekatron-custom-script-container">
   <h1 class="mekatron-custom-script-heading">Custom Script</h1>
-  <h2 style="color: darkred">#HTML</h2>
+  <h2 style="color: darkred"><?php global $title; echo '#HTML'; ?></h2>
+<!--  <h2 style="color: darkred"><?php global $title; echo '#'.$title; ?></h2>-->
+<!--  <h2 style="color: darkred"><?php global $plugin_page; echo '#'.$plugin_page; ?></h2>-->
+<!--  <h2 style="color: darkred"><?php echo '#'.get_admin_page_title(); ?></h2>-->
+<!--  <h2 style="color: darkred"><?php echo '#'.get_admin_page_parent(); ?></h2>-->
   <textarea class="mekatron-custom-script-textarea" style="height: 400px"></textarea>
+  <div class="mekatron-custom-center-button">
+    <button>
+      <span>Save</span>
+      <svg viewBox="-5 -5 110 110" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M0,0 C0,0 100,0 100,0 C100,0 100,100 100,100 C100,100 0,100 0,100 C0,100 0,0 0,0"/>
+      </svg>
+    </button>
+  </div>
 </div>
