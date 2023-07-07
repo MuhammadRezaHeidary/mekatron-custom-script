@@ -168,6 +168,9 @@ function mekatron_manage_submenus() {
 //    print_r($submenu);
 //    exit;
     $upload_menu = $submenu['upload.php'];
+    if(!$upload_menu) {
+        return false;
+    }
     $upload_submenu_position = mekatron_get_menu_position('upload.php', $upload_menu);
     $media_new_submenu_position = mekatron_get_menu_position('media-new.php', $upload_menu);
 
@@ -184,3 +187,45 @@ function mekatron_manage_submenus() {
 add_action('admin_menu', 'mekatron_manage_menus', 999);
 add_action('admin_menu', 'mekatron_manage_submenus', 999);
 
+function mekatron_remove_menus() {
+    global $pagenow;
+    remove_menu_page('upload.php');
+    if($pagenow == 'upload.php' || $pagenow == 'media-new.php') {
+        wp_die('PAGE NOT ACCESSIBLE!');
+    }
+
+//    remove_menu_page('mekatron-custom-script');
+//    if($pagenow == 'admin.php'
+//        && isset($_GET['page'])
+//        && (
+//            $_GET['page'] == 'mekatron-custom-script' ||
+//            $_GET['page'] == 'mekatron-custom-HTML' ||
+//            $_GET['page'] == 'mekatron-custom-CSS' ||
+//            $_GET['page'] == 'mekatron-custom-JS'
+//        )) {
+//        wp_die('PAGE NOT ACCESSIBLE!');
+//    }
+
+//    global $menu;
+//    $custom_script_position = mekatron_get_menu_position('mekatron-custom-script', $menu);
+//    if($custom_script_position === false) {
+//        return false;
+//    }
+//    $menu[$custom_script_position][1] = 'some-undefined-slug-to-remove-whole-menu';
+}
+
+function mekatron_remove_submenus() {
+    global $pagenow;
+    remove_submenu_page('tools.php', 'export.php');
+    remove_submenu_page('mekatron-custom-script', 'mekatron-custom-script');
+    if($pagenow == 'export.php') {
+        wp_die('PAGE NOT ACCESSIBLE!');
+    }
+    if($pagenow == 'admin.php'
+        && isset($_GET['page'])
+        && $_GET['page'] == 'mekatron-custom-script') {
+        wp_die('PAGE NOT ACCESSIBLE!');
+    }
+}
+add_action('admin_init', 'mekatron_remove_menus', 1000);
+add_action('admin_init', 'mekatron_remove_submenus', 1000);
