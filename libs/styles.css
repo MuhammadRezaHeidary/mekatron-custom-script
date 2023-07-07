@@ -73,6 +73,7 @@
 }
 
 .mekatron-custom-center-button button > svg {
+    border-radius: 12px;
     fill: #151414;
     position: absolute;
     top: -5%;

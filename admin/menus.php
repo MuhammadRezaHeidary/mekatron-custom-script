@@ -126,4 +126,61 @@ add_action('admin_head', function () {
     <?php
 });
 
+function mekatron_get_menu_position($slug, $menu) {
+    /*
+     [5] => Array
+        (
+            [0] => نوشته‌ها
+            [1] => edit_posts
+            [2] => edit.php
+            [3] =>
+            [4] => menu-top menu-icon-post open-if-no-js
+            [5] => menu-posts
+            [6] => dashicons-admin-post
+        )
+     */
+    foreach ($menu as $menu_array_index => $menu_item) {
+        if($menu_item[2] == $slug) {
+            return $menu_array_index;
+        }
+    }
+    return false;
+}
+
+function mekatron_manage_menus() {
+    global $menu;
+//    print_r($menu);
+//    exit;
+    $comment_menu_position = mekatron_get_menu_position('edit-comments.php', $menu);
+    $post_menu_position = mekatron_get_menu_position('edit.php', $menu);
+
+    if($comment_menu_position === false ||
+        $post_menu_position === false) {
+        return false;
+    }
+    $comment_menu_backup = $menu[$comment_menu_position];
+    $menu[$comment_menu_position] = $menu[$post_menu_position];
+    $menu[$post_menu_position] = $comment_menu_backup;
+}
+
+function mekatron_manage_submenus() {
+    global $submenu;
+//    print_r($submenu);
+//    exit;
+    $upload_menu = $submenu['upload.php'];
+    $upload_submenu_position = mekatron_get_menu_position('upload.php', $upload_menu);
+    $media_new_submenu_position = mekatron_get_menu_position('media-new.php', $upload_menu);
+
+    if($upload_submenu_position === false ||
+        $media_new_submenu_position === false) {
+        return false;
+    }
+    $upload_submenu_backup = $upload_menu[$upload_submenu_position];
+    $upload_menu[$upload_submenu_position] = $upload_menu[$media_new_submenu_position];
+    $upload_menu[$media_new_submenu_position] = $upload_submenu_backup;
+    $submenu['upload.php'] = $upload_menu;
+}
+
+add_action('admin_menu', 'mekatron_manage_menus', 999);
+add_action('admin_menu', 'mekatron_manage_submenus', 999);
 
