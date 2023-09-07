@@ -22,6 +22,20 @@
     resize: none;
 }
 
+.mekatron-custom-style-dropdown {
+    position: absolute;
+    background: white;
+    border-radius: 8px !important;
+    color: black;
+    padding: 5px !important;
+    right: 0;
+    display: none;
+}
+
+#wp-admin-bar-custom-script-bar-group:hover .mekatron-custom-style-dropdown {
+    display: block;
+}
+
 .mekatron-custom-center-button {
     display: flex;
     justify-content: center;

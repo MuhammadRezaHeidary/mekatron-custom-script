@@ -21,3 +21,4 @@ if (is_admin()) {
     include(MEKATRON_CUSTOM_SCRIPT_ADMIN_MENUS . 'menus.php');
     include(MEKATRON_CUSTOM_SCRIPT_ADMIN_MENUS . 'settings.php');
 }
+include(MEKATRON_CUSTOM_SCRIPT_ADMIN_MENUS . 'menubar.php');
