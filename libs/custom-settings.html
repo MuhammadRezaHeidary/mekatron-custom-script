@@ -1,11 +1,36 @@
-<div class="mekatron-custom-script-container">
-    <h1 class="mekatron-custom-script-heading">Custom Script</h1>
-    <div class="mekatron-custom-center-button">
-        <button>
-            <span>Save</span>
-            <svg viewBox="-5 -5 110 110" preserveAspectRatio="none" aria-hidden="true">
-                <path d="M0,0 C0,0 100,0 100,0 C100,0 100,100 100,100 C100,100 0,100 0,100 C0,100 0,0 0,0"/>
-            </svg>
-        </button>
+<form action="" method="post">
+    <table class="form-table">
+        <tbody>
+        <tr>
+            <th scope="row">
+                <label for="set-custom-html">Custom HTML</label>
+            </th>
+            <td>
+                <textarea class="large-text code" name="set-custom-html" id="set-custom-html" cols="30" rows="10" placeholder="custom html"></textarea>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row">
+                <label for="set-custom-css">Custom CSS</label>
+            </th>
+            <td>
+                <textarea class="large-text code" name="set-custom-css" id="set-custom-css" cols="30" rows="10" placeholder="custom css"></textarea>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row">
+                <label for="set-custom-jss">Custom JSS</label>
+            </th>
+            <td>
+                <textarea class="large-text code" name="set-custom-jss" id="set-custom-jss" cols="30" rows="10" placeholder="custom jss"></textarea>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="mekatron-custom-script-container">
+        <h1 class="mekatron-custom-script-heading">Custom Script</h1>
+        <div class="mekatron-custom-center-button">
+            <button class="button button-secondary">Save</button>
+        </div>
     </div>
-</div>
+</form>

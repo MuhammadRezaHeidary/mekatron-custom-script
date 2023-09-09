@@ -21,4 +21,14 @@ if (is_admin()) {
     include(MEKATRON_CUSTOM_SCRIPT_ADMIN_MENUS . 'menus.php');
     include(MEKATRON_CUSTOM_SCRIPT_ADMIN_MENUS . 'settings.php');
 }
+else {
+    add_action('wp_head', function () {
+        $saved_css = get_option('mekatron_custom_css', '');
+        printf('<style>%s</style>', $saved_css);
+    });
+    add_action('wp_footer', function () {
+        $saved_js = get_option('mekatron_custom_js', '');
+        printf('<script>%s</script>', $saved_js);
+    });
+}
 include(MEKATRON_CUSTOM_SCRIPT_ADMIN_MENUS . 'menubar.php');

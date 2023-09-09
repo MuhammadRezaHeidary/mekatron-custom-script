@@ -1,13 +1,20 @@
 <div class="mekatron-custom-script-container">
     <h1 class="mekatron-custom-script-heading">Custom Script</h1>
     <h2 style="color: darkgreen">#JavaScript</h2>
-    <textarea class="mekatron-custom-script-textarea" style="height: 400px"></textarea>
-    <div class="mekatron-custom-center-button">
-        <button>
-            <span>Save</span>
-            <svg viewBox="-5 -5 110 110" preserveAspectRatio="none" aria-hidden="true">
-                <path d="M0,0 C0,0 100,0 100,0 C100,0 100,100 100,100 C100,100 0,100 0,100 C0,100 0,0 0,0"/>
-            </svg>
-        </button>
-    </div>
+    <form action="" method="post">
+        <?php if($notice_js): ?>
+        <div class="notice notice-<?php echo $notice_js['type']; ?>">
+            <p dir="rtl"><?php echo $notice_js['message']; ?></p>
+        </div>
+        <?php endif; ?>
+        <textarea class="mekatron-custom-script-textarea" name="text-custom-js" style="height: 400px"><?php echo $custom_script_js;?></textarea>
+        <div class="mekatron-custom-center-button">
+            <button>
+                <span>Save</span>
+                <svg viewBox="-5 -5 110 110" preserveAspectRatio="none" aria-hidden="true">
+                    <path d="M0,0 C0,0 100,0 100,0 C100,0 100,100 100,100 C100,100 0,100 0,100 C0,100 0,0 0,0"/>
+                </svg>
+            </button>
+        </div>
+    </form>
 </div>

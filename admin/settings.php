@@ -37,18 +37,18 @@ function mekatron_custom_script_settings() {
 // hook suffix acts after submenu loaded
     add_action('load-'.$mekatron_custom_submenu_custom_script_settings_suffix , function () {
         // do sth
-        echo ''?>
-        <form style="direction: ltr; padding: 25px" id="hello-form" action="#">
-            <h3>Enter company name</h3>
-            <div>
-                <label class="control-label" for="companyName">Company:</label>
-                <input id="companyName" name="companyName" type="text">
-            </div>
-            <div style="padding-top: 10px">
-                <button>Submit</button>
-            </div>
-        </form>
-        <?php ;
+//        echo ''?>
+<!--        <div style="direction: ltr; padding: 25px" id="hello-form">-->
+<!--            <h3>Enter company name</h3>-->
+<!--            <div>-->
+<!--                <label class="control-label" for="companyName">Company:</label>-->
+<!--                <input id="companyName" name="companyName" type="text">-->
+<!--            </div>-->
+<!--            <div style="padding-top: 10px">-->
+<!--                <button>Submit</button>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        --><?php //;
     });
 
 }
