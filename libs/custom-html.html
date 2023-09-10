@@ -6,11 +6,16 @@
 <!--  <h2 style="color: darkred"><?php echo '#'.get_admin_page_title(); ?></h2>-->
 <!--  <h2 style="color: darkred"><?php echo '#'.get_admin_page_parent(); ?></h2>-->
   <form action="" method="post">
-    <?php if($notice_html): ?>
-    <div class="notice notice-<?php echo $notice_html['type']; ?>">
-      <p dir="rtl"><?php echo $notice_html['message']; ?></p>
+    <?php
+      global $mekatron_global_custom_html;
+      if($mekatron_global_custom_html):
+    ?>
+    <div class="notice notice-<?php echo $mekatron_global_custom_html['type']; ?>">
+      <p dir="rtl"><?php echo $mekatron_global_custom_html['message']; ?></p>
     </div>
-    <?php endif; ?>
+    <?php
+      endif;
+    ?>
     <textarea class="mekatron-custom-script-textarea" name="text-custom-html" style="height: 400px"><?php echo $custom_script_html;?></textarea>
     <div class="mekatron-custom-center-button">
       <button>

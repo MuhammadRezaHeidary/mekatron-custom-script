@@ -2,11 +2,16 @@
     <h1 class="mekatron-custom-script-heading">Custom Script</h1>
     <h2 style="color: darkblue">#CSS</h2>
     <form action="" method="post">
-        <?php if($notice_css): ?>
-        <div class="notice notice-<?php echo $notice_css['type']; ?>">
-            <p dir="rtl"><?php echo $notice_css['message']; ?></p>
+        <?php
+            global $mekatron_global_custom_css;
+            if($mekatron_global_custom_css):
+        ?>
+        <div class="notice notice-<?php echo $mekatron_global_custom_css['type']; ?>">
+            <p dir="rtl"><?php echo $mekatron_global_custom_css['message']; ?></p>
         </div>
-        <?php endif; ?>
+        <?php
+          endif;
+        ?>
         <textarea class="mekatron-custom-script-textarea" name="text-custom-css" style="height: 400px"><?php echo $custom_style_css;?></textarea>
         <div class="mekatron-custom-center-button">
             <button>

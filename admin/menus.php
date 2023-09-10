@@ -2,6 +2,20 @@
 
 defined('ABSPATH') || exit;
 
+function add_admin_menu_separator($position) {
+    global $menu;
+    $index = 1000;
+    foreach($menu as $offset => $section) {
+        if (substr($section[2],0,9) == 'separator')
+            $index++;
+        if ($offset>=$position) {
+            $menu[$position] = array('','read',"separator{$index}",'','wp-menu-separator');
+            break;
+        }
+    }
+    ksort( $menu );
+}
+
 function mekatron_custom_script_menu_view()
 {
     wp_enqueue_style('mekatron-custom-scripts-styles', MEKATRON_CUSTOM_SCRIPT_URL.'styles.css', false, '1.0', 'all');
@@ -9,11 +23,73 @@ function mekatron_custom_script_menu_view()
 //    include(MEKATRON_CUSTOM_SCRIPT_ADMIN_MENUS . 'settings.php');
 }
 
-function mekatron_custom_script_submenu_html()
-{
+function mekatron_custom_script_submenu_html() {
     wp_enqueue_style('mekatron-custom-scripts-styles', MEKATRON_CUSTOM_SCRIPT_URL.'styles.css', false, '1.0', 'all');
+    $custom_script_html = get_option('mekatron_custom_html','');
+    include(MEKATRON_CUSTOM_SCRIPT_DIR . 'custom-html.html');
+}
 
-    $notice_html = false;
+function mekatron_custom_script_submenu_css() {
+    wp_enqueue_style('mekatron-custom-scripts-styles', MEKATRON_CUSTOM_SCRIPT_URL.'styles.css', false, '1.0', 'all');
+    $custom_style_css = get_option('mekatron_custom_css','');
+    include(MEKATRON_CUSTOM_SCRIPT_DIR . 'custom-css.html');
+}
+
+function mekatron_custom_script_submenu_js() {
+    wp_enqueue_style('mekatron-custom-scripts-styles', MEKATRON_CUSTOM_SCRIPT_URL.'styles.css', false, '1.0', 'all');
+    $custom_script_js = get_option('mekatron_custom_js','');
+    include(MEKATRON_CUSTOM_SCRIPT_DIR . 'custom-js.html');
+}
+
+function mekatron_help_tabs($scr, $tabs) {
+//            print_r($scr);
+//            echo "<br><hr>";
+//            print_r($tabs);
+//            echo "<br><hr>";
+    if($tabs['id'] == 'custom_html_help_tab') {
+        echo "<p>callback function HTML</p>";
+    }
+    else if($tabs['id'] == 'custom_html_help_tab2') {
+        echo "<p>callback function HTML2</p>";
+    }
+    else if($tabs['id'] == 'custom_css_help_tab') {
+        echo "<p>callback function CSS</p>";
+    }
+    else if($tabs['id'] == 'custom_jss_help_tab') {
+        echo "<p>callback function JSS</p>";
+    }
+    else {
+        echo "<p>callback function x</p>";
+    }
+    echo "<p>designed by MRH!</p>";
+}
+
+function mekatron_custom_html_process() {
+
+    /*
+     * Manage help tabs
+     */
+    $screen = get_current_screen();
+    $screen->add_help_tab([
+        'title'     => 'HTML Script Help',
+        'id'        => 'custom_html_help_tab',
+        'content'   => '<b>Write your custom HTML code and save it!</b>',
+        'callback'  => 'mekatron_help_tabs',
+        'priority'  => 10
+    ]);
+    $screen->add_help_tab([
+        'title'     => 'HTML Script Help 2',
+        'id'        => 'custom_html_help_tab2',
+        'content'   => '<b>Write your custom HTML code and save it!</b>',
+        'callback'  => 'mekatron_help_tabs',
+        'priority'  => 9
+    ]);
+    $screen->set_help_sidebar("<p>Sidebar</p>");
+
+    /*
+     * Save data by using global variable
+     */
+    $GLOBALS['mekatron_global_custom_html'] = false;
 
     if(isset($_POST['text-custom-html'])){
         $script_html = trim($_POST['text-custom-html']);
@@ -30,49 +106,70 @@ function mekatron_custom_script_submenu_html()
                 'message' => '<b>HTML script not changed!</b>'
             ];
         }
+
+        $GLOBALS['mekatron_global_custom_html']  = $notice_html;
     }
-
-    $custom_script_html = get_option('mekatron_custom_html','');
-
-    include(MEKATRON_CUSTOM_SCRIPT_DIR . 'custom-html.html');
 }
 
-function mekatron_custom_script_submenu_css()
-{
-    wp_enqueue_style('mekatron-custom-scripts-styles', MEKATRON_CUSTOM_SCRIPT_URL.'styles.css', false, '1.0', 'all');
+function mekatron_custom_css_process() {
+    /*
+     * Manage help tabs
+     */
+    $screen = get_current_screen();
+    $screen->add_help_tab([
+        'title'     => 'CSS Script Help',
+        'id'        => 'custom_css_help_tab',
+        'content'   => '<b>Write your custom CSS code and save it!</b>',
+        'callback'  => 'mekatron_help_tabs',
+        'priority'  => 10
+    ]);
+    $screen->set_help_sidebar("<p>Sidebar</p>");
 
-    $notice_css = false;
+    /*
+     * Save data by using global variable
+     */
+    $GLOBALS['mekatron_global_custom_css'] = false;
 
-    if(isset($_POST['text-custom-css'])){
+    if (isset($_POST['text-custom-css'])) {
         $style_css = trim($_POST['text-custom-css']);
         $saved_css = update_option('mekatron_custom_css', $style_css);
-        if($saved_css) {
+        if ($saved_css) {
             $notice_css = [
                 'type' => 'success',
                 'message' => '<b>CSS style saved successfully!</b>'
             ];
-        }
-        else {
+        } else {
             $notice_css = [
                 'type' => 'warning',
                 'message' => '<b>CSS style not changed!</b>'
             ];
         }
+
+        $GLOBALS['mekatron_global_custom_css']  = $notice_css;
     }
-
-    $custom_style_css = get_option('mekatron_custom_css','');
-
-    include(MEKATRON_CUSTOM_SCRIPT_DIR . 'custom-css.html');
 }
 
+function mekatron_custom_js_process() {
+    /*
+     * Manage help tabs
+     */
+    $screen = get_current_screen();
+    $screen->add_help_tab([
+        'title'     => 'JSS Script Help',
+        'id'        => 'custom_jss_help_tab',
+        'content'   => '<b>Write your custom JS code and save it!</b>',
+        'callback'  => 'mekatron_help_tabs',
+        'priority'  => 10
+    ]);
+    $screen->set_help_sidebar("<p>Sidebar</p>");
 
-function mekatron_custom_script_submenu_js()
-{
-    wp_enqueue_style('mekatron-custom-scripts-styles', MEKATRON_CUSTOM_SCRIPT_URL.'styles.css', false, '1.0', 'all');
-
-    $notice_js = false;
+    /*
+     * Save data by using global variable
+     */
+    $GLOBALS['mekatron_global_custom_js']  = false;
 
     if(isset($_POST['text-custom-js'])){
+
         $script_js = trim($_POST['text-custom-js']);
         $saved_js = update_option('mekatron_custom_js', $script_js);
         if($saved_js) {
@@ -87,27 +184,11 @@ function mekatron_custom_script_submenu_js()
                 'message' => '<b>JSS script not changed!</b>'
             ];
         }
+
+        $GLOBALS['mekatron_global_custom_js'] = $notice_js;
     }
-
-    $custom_script_js = get_option('mekatron_custom_js','');
-
-    include(MEKATRON_CUSTOM_SCRIPT_DIR . 'custom-js.html');
 }
 
-
-function add_admin_menu_separator($position) {
-    global $menu;
-    $index = 1000;
-    foreach($menu as $offset => $section) {
-        if (substr($section[2],0,9) == 'separator')
-            $index++;
-        if ($offset>=$position) {
-            $menu[$position] = array('','read',"separator{$index}",'','wp-menu-separator');
-            break;
-        }
-    }
-    ksort( $menu );
-}
 
 function mekatron_custom_script_menu()
 {
@@ -144,9 +225,8 @@ function mekatron_custom_script_menu()
     );
 
     // hook suffix acts after submenu loaded
-    add_action('load-'.$mekatron_custom_submenu_html_suffix , function () {
-        // do sth
-    });
+    add_action('load-'.$mekatron_custom_submenu_html_suffix , 'mekatron_custom_html_process');
+//    add_action('load-tools.php' , 'mekatron_custom_html_process'); // adding help tabs to other plugins and menus
 
     $mekatron_custom_submenu_css_suffix = add_submenu_page(
         'mekatron-custom-script',
@@ -159,14 +239,12 @@ function mekatron_custom_script_menu()
     );
 
     // hook suffix acts after submenu loaded
-    add_action('load-'.$mekatron_custom_submenu_css_suffix , function () {
-        // do sth
-    });
+    add_action('load-'.$mekatron_custom_submenu_css_suffix , 'mekatron_custom_css_process');
 
     $mekatron_custom_submenu_js_suffix = add_submenu_page(
         'mekatron-custom-script',
         'mekatron-custom-JS',
-        'JS',
+        'JSS',
         'manage_options',
         'mekatron-custom-JS',
         'mekatron_custom_script_submenu_js',
@@ -174,9 +252,7 @@ function mekatron_custom_script_menu()
     );
 
     // hook suffix acts after submenu loaded
-    add_action('load-'.$mekatron_custom_submenu_js_suffix , function () {
-        // do sth
-    });
+    add_action('load-'.$mekatron_custom_submenu_js_suffix , 'mekatron_custom_js_process');
 
 }
 
